@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<h1 class="page-header">Images</h1>
+
+{% include 'flash_messages.html' %}
+
+
+    
+
+    {# Example usage of route for files not in static folder #}
+    <img src="{{ url_for('get_image', filename=filename) }}" />
+
+{% endblock %}
