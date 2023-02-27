@@ -1,4 +1,4 @@
-import os
+
 from app import app, db, login_manager
 from flask import render_template, request, redirect, url_for, flash, session, abort, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash
 from app.models import UserProfile
 from app.forms import LoginForm, UploadForm
+import os
 
 
 ###
