@@ -6,9 +6,10 @@
 {% include 'flash_messages.html' %}
 
 
+   <div class="Images">
+        {% for i in filename %}
+        <img src="{{ url_for('get_image', filename=i) }}" />
+        {% endfor %}
+   </div> 
     
-
-    {# Example usage of route for files not in static folder #}
-    <img src="{{ url_for('get_image', filename=filename) }}" />
-
 {% endblock %}

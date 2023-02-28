@@ -20,6 +20,12 @@ body {
 }
 
 img{
-    width: 30%;
-    height:auto;
+    object-fit: cover;
+    width: 230px;
+    height: 230px;
+    padding: 10px;
+}
+.Images{
+    display: grid;
+    grid-template-columns: auto auto auto;
 }

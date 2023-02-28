@@ -64,6 +64,7 @@ def login():
         if user is not None and check_password_hash(user.password, password):
             # Gets user id, load into session
             login_user(user)
+            session['logged_in'] = True
             flash('Logged in successfully.', 'success')
         else:
             flash('Log in unsccessful.', 'failed')
@@ -71,6 +72,13 @@ def login():
         return redirect(url_for("upload"))  # The user should be redirected to the upload form instead
     return render_template("login.html", form=form)
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    session['logged_in'] = False
+    flash('You were logged out successfully!', 'success')
+    return redirect(url_for('home'))
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
 @login_manager.user_loader
@@ -83,21 +91,24 @@ def get_image(filename):
     return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
 
 @app.route("/files")
+@login_required
 def files():
     filename = get_uploaded_images()
-    return render_template("files.html", filename="20220826_092014.jpg")
+    # flash(filename)
+    return render_template("files.html", filename=filename)
 ###
 # The functions below should be applicable to all Flask apps.
 ###
 
 def get_uploaded_images():
     root_dir = os.getcwd()
-
-    for subdir, dirs, files in os.walk(root_dir + 'UPLOAD_FOLDER'):
+    temp=[]
+    for subdir, dirs, files in os.walk(root_dir + '/uploads'): 
         for file in files:
-            return os.path.join(subdir, file)
-    # return send_from_directory(os.path.join(root_dir, app.config['UPLOAD_FOLDER']), filename)
-
+            filename = file 
+            temp.append(filename)
+    return temp
+            
 # Flash errors from the form if validation fails
 def flash_errors(form):
     for field, errors in form.errors.items():
